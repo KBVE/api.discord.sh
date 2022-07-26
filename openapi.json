@@ -1,12 +1,12 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "API Service",
+    "title": "api.discord.sh",
     "version": "1.0.0",
-    "description": "API Service endpoints",
+    "description": "api.discord.sh",
     "contact": {
-      "email": "sidhant@panda.fyi",
-      "name": "Sidhant Panda"
+      "email": "support@discord.sh",
+      "name": "Discord.sh Support"
     }
   },
   "servers": [
