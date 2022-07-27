@@ -8,6 +8,8 @@ export const addBookSchema = Joi.object().keys({
   author: Joi.string().required()
 });
 
+
+
 interface AddReqBody {
   name: string;
   author: string;
@@ -24,5 +26,7 @@ const add: RequestHandler = async (req: Request<{}, {}, AddReqBody>, res) => {
     book: book.toJSON()
   });
 };
+
+
 
 export default requestMiddleware(add, { validation: { body: addBookSchema } });
