@@ -4,11 +4,24 @@ import apiSpec from '../openapi.json';
 
 import * as BookController from './controllers/book';
 
+/** Guild Controller based upon the BookController */
+
+import * as GuildController from './controllers/guild';
+
 const swaggerUiOptions = {
   customCss: '.swagger-ui .topbar { display: none }'
 };
 
 const router = Router();
+
+/** Guild Routes based upon the Book Routes */
+router.post('/guild/add', GuildController.add);
+//router.get('/guild/all', GuildController.all);
+//router.get('/guild/search', GuildController.search);
+//router.get('/guild/id/:GuildId', GuildController.get);
+//router.delete('/guild/id/:GuildId', GuildController.remove);
+
+
 
 // Book routes
 router.post('/book/add', BookController.add);
