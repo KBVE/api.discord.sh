@@ -22,6 +22,9 @@ export interface Guild {
   Type: string;
   Platform: string;
 
+  /** Email - We should keep it private */
+  Email: string;
+
   /** Timestamp */
   createdAt: Date;
   updatedAt: Date;
@@ -45,7 +48,9 @@ const schema = new Schema<Guild>({
   Private: Schema.Types.Boolean,
   ApplicationFormURL: Schema.Types.String,
   Type: Schema.Types.String,
-  Platform: Schema.Types.String
+  Platform: Schema.Types.String, 
+  /** Email - We should keep it private */ 
+  Email: Schema.Types.String
 }, { timestamps: true });
 
 const Guild: GuildModel = model<Guild, GuildModel>('Guild', schema);

@@ -16,7 +16,7 @@ const router = Router();
 
 /** Guild Routes based upon the Book Routes */
 router.post('/guild/add', GuildController.add);
-//router.get('/guild/all', GuildController.all);
+router.get('/guild/all', GuildController.all);
 //router.get('/guild/search', GuildController.search);
 //router.get('/guild/id/:GuildId', GuildController.get);
 //router.delete('/guild/id/:GuildId', GuildController.remove);

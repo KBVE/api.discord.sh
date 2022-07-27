@@ -17,14 +17,101 @@
   "tags": [
     {
       "name": "book",
-      "description": "Books APIs"
+      "description": "Books and Guild APIs"
     }
   ],
   "paths": {
+    
+    "/guild/add": {
+      "post": {
+        "tags": ["book"],
+        "summary": "Add a Guild to the database!",
+        "operationId": "guild-add",
+        "requestBody": {
+          "description": "New guild add",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DraftGuildSchema"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Guild was added",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GuildSchema"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestSchema"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerErrorSchema"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/guild/all": {
+      "get": {
+        "tags": ["book"],
+        "summary": "Get all guild in database",
+        "operationId": "guild-get-all",
+        "responses": {
+          "200": {
+            "description": "Search results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "books": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/GuildSchema"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerErrorSchema"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/book/add": {
       "post": {
         "tags": ["book"],
-        "summary": "Add a book to the database",
+        "summary": "Add a book to the database!",
         "operationId": "book-add",
         "requestBody": {
           "description": "New user signing up",
@@ -279,17 +366,64 @@
         "properties": {
           "name": {
             "type": "string",
-            "description": "Name of the book",
-            "example": "The Hitchhiker's Guide to the Galaxy"
+            "description": "Name of the Book",
+            "example": "342732838598082562"
           },
           "author": {
             "type": "string",
-            "description": "Name of the author",
-            "example": "Douglas Adams"
+            "description": "Name of the Author",
+            "example": "Holy Thomas L Jackson the 5th"
           }
         },
         "required": ["name", "author"]
       },
+
+
+      "DraftGuildSchema": {
+        "type": "object",
+        "properties": {
+          "guildid": {
+            "type": "string",
+            "description": "Number of the Guild ID",
+            "example": "342732838598082562"
+          },
+          "Email": {
+            "type": "string",
+            "description": "Email of the Author of Guild",
+            "example": "Holy@x.com"
+          }
+        },
+        "required": ["GuildId", "Email"]
+      },
+
+      "GuildSchema": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/DraftGuildSchema"
+          }
+        ],
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "MongoDB id of the document",
+            "example": "5d7224d3b40b1a1a046697dd"
+          },
+          "createdAt": {
+            "type": "number",
+            "description": "Created at timestamp in miliseconds",
+            "example": 1616158942428
+          },
+          "updatedAt": {
+            "type": "number",
+            "description": "Updated at timestamp in miliseconds",
+            "example": 1616158942428
+          }
+        },
+        "required": ["_id", "createdAt", "updatedAt"]
+      },
+
+
       "BookSchema": {
         "allOf": [
           {

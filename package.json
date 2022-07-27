@@ -13,7 +13,7 @@
     "boilerplate",
     "eslint"
   ],
-  "author": "Sidhant Panda",
+  "author": "h0lybyte, Ziggy, LongTesla",
   "main": "dist/index.js",
   "scripts": {
     "eslint": "eslint src/server.ts",

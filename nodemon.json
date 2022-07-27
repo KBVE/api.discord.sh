@@ -6,7 +6,8 @@
     "node_modules"
   ],
   "watch": [
-    "src"
+    "src",
+    "openapi.json"
   ],
   "exec": "yarn eslint && yarn ts-node-server",
   "ext": "ts"
