@@ -3,7 +3,7 @@ import {
 } from 'mongoose';
 import { ISocialLinks } from './SocialLinks'
 
-export interface Guild {
+export interface IGuild {
   GuildId: number;
   LastVote: number | Date;
   MonthlyTotalVote: number;
@@ -30,9 +30,9 @@ export interface Guild {
   updatedAt: Date;
 }
 
-interface GuildModel extends Model<Guild> { }
+interface IGuildModel extends Model<IGuild> { }
 
-const schema = new Schema<Guild>({
+const schema = new Schema<IGuild>({
   GuildId: { type: Schema.Types.Number, required: true },
   LastVote: Schema.Types.Number,
   MonthlyTotalVote: Schema.Types.Number,
@@ -53,6 +53,6 @@ const schema = new Schema<Guild>({
   Email: Schema.Types.String
 }, { timestamps: true });
 
-const Guild: GuildModel = model<Guild, GuildModel>('Guild', schema);
+const Guild: IGuildModel = model<IGuild, IGuildModel>('Guild', schema);
 
 export default Guild;

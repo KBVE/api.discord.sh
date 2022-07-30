@@ -4,12 +4,7 @@ import requestMiddleware from '../../middleware/request-middleware';
 import Guild from '../../models/Guild';
 
 export const addGuildSchema = Joi.object().keys({
-//  GuildId: Joi.number().integer().max(9007199254740990).required(),
-//  999999999999999999
-//  34273283859808222
-//  9007199254740991
-//  GuildId: Joi.number().integer().max(18).required(),
-  guildid: Joi.string().alphanum().min(18).max(18).required(),
+  guildid: Joi.string().min(18).max(18).required(),
   Email: Joi.string().min(3).email().required()
 });
 
