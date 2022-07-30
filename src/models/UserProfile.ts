@@ -16,7 +16,6 @@ export interface IUserProfile extends Document {
 
 interface IUserProfileModel extends Model<IUserProfile> { }
 
-
 const schema = new Schema<IUserProfile>({
   user: {
     type: Schema.Types.ObjectId,

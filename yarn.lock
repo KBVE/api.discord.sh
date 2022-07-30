@@ -941,11 +941,6 @@
   dependencies:
     "@types/node" "*"
 
-"@types/hapi__joi@17.1.8":
-  version "17.1.8"
-  resolved "https://registry.yarnpkg.com/@types/hapi__joi/-/hapi__joi-17.1.8.tgz#78b3d22c4c9e62709894abd8c664508051f29e6b"
-  integrity sha512-omVytnOAiAfzGUOQArujJr3heWxPrDHW7MF1ieqix1ngoGdhtJmSSDFVM+ZAOa7UmhlGJtltdgUAT03mfDu6kg==
-
 "@types/istanbul-lib-coverage@*", "@types/istanbul-lib-coverage@^2.0.0", "@types/istanbul-lib-coverage@^2.0.1":
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/@types/istanbul-lib-coverage/-/istanbul-lib-coverage-2.0.4.tgz#8467d4b3c087805d63580480890791277ce35c44"
@@ -972,6 +967,13 @@
   dependencies:
     jest-matcher-utils "^28.0.0"
     pretty-format "^28.0.0"
+
+"@types/joi@^17.2.3":
+  version "17.2.3"
+  resolved "https://registry.yarnpkg.com/@types/joi/-/joi-17.2.3.tgz#b7768ed9d84f1ebd393328b9f97c1cf3d2b94798"
+  integrity sha512-dGjs/lhrWOa+eO0HwgxCSnDm5eMGCsXuvLglMghJq32F6q5LyyNuXb41DHzrg501CKNOSSAHmfB7FDGeUnDmzw==
+  dependencies:
+    joi "*"
 
 "@types/json-schema@^7.0.9":
   version "7.0.9"
@@ -3411,7 +3413,7 @@ jest@28.1.2:
     import-local "^3.0.2"
     jest-cli "^28.1.2"
 
-joi@17.6.0:
+joi@*, joi@17.6.0:
   version "17.6.0"
   resolved "https://registry.yarnpkg.com/joi/-/joi-17.6.0.tgz#0bb54f2f006c09a96e75ce687957bd04290054b2"
   integrity sha512-OX5dG6DTbcr/kbMFj0KGYxuew69HPcAE3K/sZpEV2nP6e/j/C0HV+HNiBPCASxdx5T7DMoa0s8UeHWMnb6n2zw==

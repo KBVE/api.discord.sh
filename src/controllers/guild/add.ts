@@ -3,10 +3,14 @@ import Joi from 'joi';
 import requestMiddleware from '../../middleware/request-middleware';
 import Guild from '../../models/Guild';
 
-export const addGuildSchema = Joi.object().keys({
-  guildid: Joi.string().min(18).max(18).required(),
-  Email: Joi.string().min(3).email().required()
-});
+
+
+export const addGuildSchema = Joi.object({
+  //guildid: Joi.string().min(18).max(18).required(),
+
+  guildid: Joi.string().required(),
+  Email: Joi.string().required()
+})
 
 interface AddReqBody {
   guildid: string;
