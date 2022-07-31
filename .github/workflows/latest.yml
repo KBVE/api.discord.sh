@@ -76,7 +76,5 @@ jobs:
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            ls \
-              -lah \
-                whoami \
-                  ls -al \
+            ls
+              whoami
