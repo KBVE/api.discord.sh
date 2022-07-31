@@ -1,4 +1,4 @@
-name: Build and Publish
+name: Build, Publish and Deploy
 on:
   push:
     branches: [main]
@@ -62,3 +62,21 @@ jobs:
           repository: kbve/api.discord.sh/api.discord.sh
           tag_with_sha: true
           tag_with_ref: true
+  
+  deploy:
+    needs: [publish]
+    runs-on: ubuntu-latest
+    name: Deploy image to Host
+    steps:
+      - name: Executing remote ssh commands
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            ls \
+              -lah \
+                whoami \
+                  ls -al \
