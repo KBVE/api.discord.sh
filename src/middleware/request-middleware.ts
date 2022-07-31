@@ -4,6 +4,7 @@ import {
 import Joi from 'joi';
 import BadRequest from '../errors/bad-request';
 import logger from '../logger';
+import authMiddleware from './auth-middleware'
 
 /**
  * Helper to get message from Joi
@@ -21,7 +22,8 @@ const getMessageFromJoiError = (error: Joi.ValidationError): string | undefined 
 interface HandlerOptions {
   validation?: {
     body?: Joi.ObjectSchema
-  }
+  },
+  protected?: boolean
 };
 
 /**
@@ -34,6 +36,11 @@ export const requestMiddleware = (
   handler: RequestHandler,
   options?: HandlerOptions,
 ): RequestHandler => async (req: Request, res: Response, next: NextFunction) => {
+
+  const authenticatedRequest = authMiddleware(req)
+
+  if (options?.protected && !authenticatedRequest.auth)
+    next(new BadRequest("Unauthorized"))
   if (options?.validation?.body) {
     const { error } = options?.validation?.body.validate(req.body);
     if (error != null) {
@@ -43,7 +50,7 @@ export const requestMiddleware = (
   }
 
   try {
-    handler(req, res, next);
+    handler(authenticatedRequest, res, next);
   } catch (err) {
     if (process.env.NODE_ENV === 'development') {
       logger.log({

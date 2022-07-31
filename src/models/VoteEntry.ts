@@ -3,12 +3,13 @@ import {
 } from 'mongoose';
 import { IUser } from './User'
 import { IGuild } from './Guild'
+import { INetworkInfo } from './NetworkInfo'
 
 export interface IVoteEntry extends Document {
-  user: PopulatedDoc<IUser>
-  guild: PopulatedDoc<IGuild>
-  voteEvent: string
-  networkInfo: object
+  User: PopulatedDoc<IUser>
+  Guild: PopulatedDoc<IGuild>
+  VoteEvent: string
+  NetworkInfo: PopulatedDoc<INetworkInfo>
 
   createdAt: Date
   updatedAt: Date
@@ -17,17 +18,21 @@ export interface IVoteEntry extends Document {
 interface IVoteEntryModel extends Model<IVoteEntry> { }
 
 const schema = new Schema<IVoteEntry>({
-  user: {
+  User: {
     type: Schema.Types.ObjectId,
     ref: 'User',
   },
-  guild: {
+  Guild: {
     type: Schema.Types.ObjectId,
     ref: 'Guild',
     required: true
   },
-  voteEvent: String,
-  networkInfo: Schema.Types.Mixed
+  VoteEvent: String,
+  NetworkInfo: {
+    type: Schema.Types.ObjectId,
+    ref: 'NetworkInfo',
+    required: true
+  }
 }, { timestamps: true });
 
 const VoteEntry: IVoteEntryModel = model<IVoteEntry, IVoteEntryModel>('VoteEntry', schema);

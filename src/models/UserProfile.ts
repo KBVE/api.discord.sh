@@ -5,10 +5,10 @@ import { IUser } from './User'
 import { IGuild } from './Guild'
 
 export interface IUserProfile extends Document {
-  user: PopulatedDoc<IUser>
+  User: PopulatedDoc<IUser>
 
-  credits: number
-  attributedGuild: PopulatedDoc<IGuild>
+  Credits: number
+  AttributedGuild: PopulatedDoc<IGuild>
 
   createdAt: Date
   updatedAt: Date
@@ -17,17 +17,17 @@ export interface IUserProfile extends Document {
 interface IUserProfileModel extends Model<IUserProfile> { }
 
 const schema = new Schema<IUserProfile>({
-  user: {
+  User: {
     type: Schema.Types.ObjectId,
     ref: 'User',
     index: true,
     required: true
   },
-  credits: {
+  Credits: {
     type: Number,
     default: 0
   },
-  attributedGuild: {
+  AttributedGuild: {
     type: Schema.Types.ObjectId,
     ref: 'Guild'
   }

@@ -4,7 +4,7 @@ import {
 import { ISocialLinks } from './SocialLinks'
 
 export interface IGuild {
-  GuildId: number;
+  GuildId: string;
   LastVote: number | Date;
   MonthlyTotalVote: number;
   LastMonthTotalVote: number;
@@ -33,7 +33,7 @@ export interface IGuild {
 interface IGuildModel extends Model<IGuild> { }
 
 const schema = new Schema<IGuild>({
-  GuildId: { type: Schema.Types.Number, required: true },
+  GuildId: { type: Schema.Types.String, required: true },
   LastVote: Schema.Types.Number,
   MonthlyTotalVote: Schema.Types.Number,
   GuildToken: Schema.Types.Number,

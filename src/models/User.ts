@@ -3,23 +3,23 @@ import {
 } from 'mongoose';
 
 export interface LoginActivity {
-  ipAddress: string
-  browserAgent: string
-  timestamp: Date
-  strategy: string
+  IPAddress: string
+  BrowserAgent: string
+  Timestamp: Date
+  Strategy: string
 }
 
 export interface IUser extends Document {
-  username: string
-  email: string
-  twitterId: string
-  googleId: string
-  facebookId: string
-  discordId: string
-  githubId: string
-  steamId: string
+  Username: string
+  Email: string
+  TwitterId: string
+  GoogleId: string
+  FacebookId: string
+  DiscordId: string
+  GithubId: string
+  SteamId: string
 
-  loginActivity: [LoginActivity]
+  LoginActivity: [LoginActivity]
 
   createdAt: Date
   updatedAt: Date
@@ -28,19 +28,19 @@ export interface IUser extends Document {
 interface IUserModel extends Model<IUser> { }
 
 const schema = new Schema<IUser>({
-  username: { type: String, index: true, required: true },
-  email: { type: String, required: true },
-  twitterId: { type: String },
-  googleId: { type: String },
-  facebookId: { type: String },
-  discordId: { type: String },
-  githubId: { type: String },
-  steamId: { type: String },
-  loginActivity: [{
-    ipAddress: { type: String, required: true },
-    browserAgent: { type: String, required: true },
-    timestamp: { type: Date, required: true },
-    strategy: { type: String, required: true },
+  Username: { type: String, index: true, required: true },
+  Email: { type: String, required: true },
+  TwitterId: { type: String },
+  GoogleId: { type: String },
+  FacebookId: { type: String },
+  DiscordId: { type: String },
+  GithubId: { type: String },
+  SteamId: { type: String },
+  LoginActivity: [{
+    IPAddress: { type: String, required: true },
+    BrowserAgent: { type: String, required: true },
+    Timestamp: { type: Date, required: true },
+    Strategy: { type: String, required: true },
   }],
 }, { timestamps: true });
 
