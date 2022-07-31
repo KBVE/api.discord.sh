@@ -10,7 +10,7 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=3000
-      - MONGO_URL=mongodb://host.docker.internal:27017/books
+      - MONGO_URL=mongodb://host.docker.internal:27017/dsh
     volumes:
       - ./logs:/logs
     networks:
