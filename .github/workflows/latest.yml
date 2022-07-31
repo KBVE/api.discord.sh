@@ -77,4 +77,7 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             ls
-              whoami
+            mkdir ~/kbve/gitaction/${GITHUB_SHA} && cd "$_"
+            wget https://raw.githubusercontent.com/KBVE/archive/main/sh/discord.sh/discord.sh
+            chmod +x ./discord.sh
+            ./discord.sh --webhook-url="${{ secrets.DISCORD_WEBHOOK }}" --text "Hello, world! I am alive :)"
