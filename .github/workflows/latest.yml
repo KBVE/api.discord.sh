@@ -68,9 +68,6 @@ jobs:
     runs-on: ubuntu-latest
     name: Deploy image to Host
     steps:
-      - name: Acquire short form sha variable
-        id: vars
-        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
       - name: Executing remote ssh commands
         uses: appleboy/ssh-action@master
         with:
@@ -86,7 +83,7 @@ jobs:
             chmod +x ./discord.sh
             ./discord.sh --webhook-url="${{ secrets.DISCORD_WEBHOOK }}" --text "Hello, world! I am alive :)"
             docker stop api
-            docker pull ghcr.io/kbve/api.discord.sh/api.discord.sh:sha-${{ steps.vars.outputs.sha_short }}
-            docker run -d -it --network app-network --name api --env NODE_ENV=production --env MONGO_URL=${{ secrets.MONGO_URL }} -p 80:3000 ghcr.io/kbve/api.discord.sh/api.discord.sh:sha-${{ steps.vars.outputs.sha_short }}
-            echo "docker stop api; docker rm ghcr.io/kbve/api.discord.sh/api.discord.sh:sha-${{ steps.vars.outputs.sha_short }}; rm ~/kbve/cleanup-last.sh" >> ~/kbve/cleanup-last.sh
+            docker pull ghcr.io/kbve/api.discord.sh/api.discord.sh:sha-${{ github.head_ref }}
+            docker run -d -it --network app-network --name api --env NODE_ENV=production --env MONGO_URL=${{ secrets.MONGO_URL }} -p 80:3000 ghcr.io/kbve/api.discord.sh/api.discord.sh:sha-${{ github.head_ref }}
+            echo "docker stop api; docker rm ghcr.io/kbve/api.discord.sh/api.discord.sh:sha-${{ github.head_ref }}; rm ~/kbve/cleanup-last.sh" >> ~/kbve/cleanup-last.sh
 
