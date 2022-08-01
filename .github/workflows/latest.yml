@@ -110,6 +110,7 @@ jobs:
               cd ~/kbve/gitaction/${{ github.sha }} 
               ./discord.sh --webhook-url="${{ secrets.DISCORD_WEBHOOK }}" --username "DickerTheDocker" --avatar "https://i.imgur.com/E5P5lb1.jpg"  --text "Attempting to run the new docker image."
               docker stop api
+              docker rm api
               docker run -d -it --network app-network --name api --env NODE_ENV=production --env MONGO_URL=${{ secrets.MONGO_URL }} -p 80:3000 ghcr.io/kbve/api.discord.sh/api.discord.sh:sha-${{ steps.vars.outputs.sha_short }}
               
   deploy-status:
