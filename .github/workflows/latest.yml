@@ -137,10 +137,6 @@ jobs:
       needs: [deploy]
       runs-on: ubuntu-latest
       name: Cleaning up the Host
-      fail-fast: false
-      strategy: 
-        matrix:
-          experimental: [true]
       steps:
         - name: Executing remote ssh commands
           uses: appleboy/ssh-action@master
