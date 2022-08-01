@@ -131,7 +131,7 @@ jobs:
             script: |
               ls
               cd ~/kbve/gitaction/${{ github.sha }} 
-              result=$(docker start -a -i `docker ps -q -l`)
+              result=$(docker ps -q -l)
               ./discord.sh --webhook-url="${{ secrets.DISCORD_WEBHOOK }}" --username "DickerTheDocker" --avatar "https://i.imgur.com/E5P5lb1.jpg"  --text $result
 
   cleanup:
