@@ -63,10 +63,10 @@ jobs:
           tag_with_sha: true
           tag_with_ref: true
   
-  deploy:
+  pkgpull:
     needs: [publish]
     runs-on: ubuntu-latest
-    name: Deploy image to Host
+    name: Package Pull to Host
     steps:
       - name: Acquire short form sha variable
         id: vars
@@ -79,14 +79,54 @@ jobs:
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            . ~/kbve/cleanup-last.sh
             ls
             mkdir -p ~/kbve/gitaction/${{ github.sha }} && cd "$_"
             wget https://raw.githubusercontent.com/KBVE/archive/main/sh/discord.sh/discord.sh
             chmod +x ./discord.sh
-            ./discord.sh --webhook-url="${{ secrets.DISCORD_WEBHOOK }}" --text "Hello, world! I am alive :)"
-            docker stop api
+            ./discord.sh --webhook-url="${{ secrets.DISCORD_WEBHOOK }}" --username "DickerTheDocker" --avatar "https://avatars.githubusercontent.com/u/110081661" --text "Created Folder /kbve/gitaction/${{ github.sha }}"
+            echo "docker rm ghcr.io/kbve/api.discord.sh/api.discord.sh:sha-${{ steps.vars.outputs.sha_short }};" >> ./cleanup.sh
+            chmod +x ./cleanup.sh
+            ./discord.sh --webhook-url="${{ secrets.DISCORD_WEBHOOK }}" --username "DickerTheDocker" --avatar "https://avatars.githubusercontent.com/u/110081661" --text "Created Cleanup.sh for ${{ steps.vars.outputs.sha_short }}"
             docker pull ghcr.io/kbve/api.discord.sh/api.discord.sh:sha-${{ steps.vars.outputs.sha_short }}
-            docker run -d -it --network app-network --name api --env NODE_ENV=production --env MONGO_URL=${{ secrets.MONGO_URL }} -p 80:3000 ghcr.io/kbve/api.discord.sh/api.discord.sh:sha-${{ steps.vars.outputs.sha_short }}
-            echo "docker stop api; docker rm ghcr.io/kbve/api.discord.sh/api.discord.sh:sha-${{ steps.vars.outputs.sha_short }}; rm ~/kbve/cleanup-last.sh" >> ~/kbve/cleanup-last.sh
+            ./discord.sh --webhook-url="${{ secrets.DISCORD_WEBHOOK }}" --username "DickerTheDocker" --avatar "https://avatars.githubusercontent.com/u/110081661" --text "Pulled Docker Image for ${{ steps.vars.outputs.sha_short }}"
+  
+  deploy:
+      needs: [pkgpull]
+      runs-on: ubuntu-latest
+      name: Deploy image from Host
+      steps:
+        - name: Acquire short form sha variable
+          id: vars
+          run: echo "::set-output name=sha_short::$(echo ${{ github.sha }} | cut -b 1-7)"
+        - name: Executing remote ssh commands
+          uses: appleboy/ssh-action@master
+          with:
+            host: ${{ secrets.HOST }}
+            username: ${{ secrets.USERNAME }}
+            key: ${{ secrets.KEY }}
+            port: ${{ secrets.PORT }}
+            script: |
+              ls
+              cd ~/kbve/gitaction/${{ github.sha }} 
+              ./discord.sh --webhook-url="${{ secrets.DISCORD_WEBHOOK }}" --text "Attempting to run the new docker image."
+              docker stop api
+              docker run -d -it ghcr.io/kbve/api.discord.sh/api.discord.sh:sha-${{ steps.vars.outputs.sha_short }} --name api -p 80:3000
 
+  cleanup:
+      needs: [deploy]
+      runs-on: ubuntu-latest
+      name: Cleaning up the Host
+      steps:
+        - name: Executing remote ssh commands
+          uses: appleboy/ssh-action@master
+          with:
+            host: ${{ secrets.HOST }}
+            username: ${{ secrets.USERNAME }}
+            key: ${{ secrets.KEY }}
+            port: ${{ secrets.PORT }}
+            script: |
+              ls
+              cd ~/kbve
+              ./discord.sh --webhook-url="${{ secrets.DISCORD_WEBHOOK }}" --text "Cleaning up the environment"
+              docker rm $(docker ps --filter status=exited -q)
+              docker image prune -a --force --filter "until=168h"
