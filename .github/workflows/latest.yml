@@ -152,3 +152,17 @@ jobs:
               ./discord.sh --webhook-url="${{ secrets.DISCORD_WEBHOOK }}" --username "DickerTheDocker" --avatar "https://i.imgur.com/E5P5lb1.jpg"  --text "Cleaning up the environment"
               docker rm $(docker ps --filter status=exited -q)
               docker image prune -a --force --filter "until=168h"
+
+  linkcheck:
+      needs: [deploy-status]
+      runs-on: ubuntu-latest
+      name: Checking links
+      steps:
+        - name: Check the deployed service URL
+          uses: jtalk/url-health-check-action@v2
+          with:
+            url: https://api.discord.sh|http://api.discord.sh
+            follow-redirect: true
+            max-attempts: 3
+            retry-delay: 5s
+            retry-all: false
