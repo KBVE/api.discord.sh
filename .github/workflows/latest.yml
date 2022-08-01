@@ -63,6 +63,23 @@ jobs:
           tag_with_sha: true
           tag_with_ref: true
   
+  backup_mongodb:
+    needs: [publish]
+    runs-on: ubuntu-latest
+    name: Backing up MongoDB
+    steps:
+      - name: Executing docker commands via remote ssh commands
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            ls
+            mkdir -p ~/kbve/gitaction/${{ github.sha }} && cd "$_"
+            docker exec -i mongodb sh -c 'mongodump --archive' > db_${{ github.sha }}.dump
+
   pkgpull:
     needs: [publish]
     runs-on: ubuntu-latest
@@ -156,7 +173,7 @@ jobs:
   linkcheck:
       needs: [deploy-status]
       runs-on: ubuntu-latest
-      name: Checking links
+      name: Checking public links.
       steps:
         - name: Check the deployed service URL
           uses: jtalk/url-health-check-action@v2
