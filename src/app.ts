@@ -26,9 +26,6 @@ function logResponseTime(req: Request, res: Response, next: NextFunction) {
   next();
 }
 
-  
-app.use(passport.initialize());
-app.use(passport.session());
 
 app.use(logResponseTime);
 
