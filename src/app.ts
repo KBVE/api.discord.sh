@@ -1,4 +1,5 @@
 import bodyParser from 'body-parser';
+import passport from 'passport';
 import compression from 'compression';
 import path from 'path';
 import express, { Request, Response, NextFunction } from 'express';
@@ -24,6 +25,10 @@ function logResponseTime(req: Request, res: Response, next: NextFunction) {
 
   next();
 }
+
+  
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(logResponseTime);
 

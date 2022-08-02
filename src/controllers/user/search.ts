@@ -27,7 +27,7 @@ const buildUserSeachQuery = (
 ): { [key: string]: any } => {
   const query: any = {};
   if (UserId) {
-    query.UserId = UserId
+    query._id = UserId
   }
   if (Username) {
     query.Username = new RegExp(`.*${Username}.*`, 'i');
@@ -83,7 +83,7 @@ const search: RequestHandler = async (req: Request<{}, {}, {}, SearchReqBody>, r
   } = req.query;
 
   const query = buildUserSeachQuery(UserId, Username, Email, TwitterId, GoogleId, FacebookId, DiscordId, GithubId, SteamId);
-  const users = await User.find(query);
+  const users = await User.find(query).lean();
   res.send({ users });
 };
 

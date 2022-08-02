@@ -1,13 +1,8 @@
 import {
-  Model, Schema, model, Document
+  Model, Schema, model, Document, PopulatedDoc
 } from 'mongoose';
 
-export interface LoginActivity {
-  IPAddress: string
-  BrowserAgent: string
-  Timestamp: Date
-  Strategy: string
-}
+import { INetworkInfo } from './NetworkInfo'
 
 export interface IUser extends Document {
   Username: string
@@ -19,7 +14,7 @@ export interface IUser extends Document {
   GithubId: string
   SteamId: string
 
-  LoginActivity: [LoginActivity]
+  LoginActivity: [PopulatedDoc<INetworkInfo>]
 
   createdAt: Date
   updatedAt: Date
@@ -28,7 +23,7 @@ export interface IUser extends Document {
 interface IUserModel extends Model<IUser> { }
 
 const schema = new Schema<IUser>({
-  Username: { type: String, index: true, required: true },
+  Username: { type: String, required: true },
   Email: { type: String, required: true },
   TwitterId: { type: String },
   GoogleId: { type: String },
@@ -37,10 +32,8 @@ const schema = new Schema<IUser>({
   GithubId: { type: String },
   SteamId: { type: String },
   LoginActivity: [{
-    IPAddress: { type: String, required: true },
-    BrowserAgent: { type: String, required: true },
-    Timestamp: { type: Date, required: true },
-    Strategy: { type: String, required: true },
+    type: Schema.Types.ObjectId,
+    ref: 'NetworkInfo',
   }],
 }, { timestamps: true });
 
