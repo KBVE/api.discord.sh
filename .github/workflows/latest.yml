@@ -52,7 +52,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
       - name: Publish image to Github Packages
         uses: docker/build-push-action@v1
         with:
