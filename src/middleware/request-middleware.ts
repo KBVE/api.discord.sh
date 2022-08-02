@@ -36,11 +36,13 @@ export const requestMiddleware = (
   handler: RequestHandler,
   options?: HandlerOptions,
 ): RequestHandler => async (req: Request, res: Response, next: NextFunction) => {
-
+  try {
   const authenticatedRequest = authMiddleware(req)
 
-  if (options?.protected && !authenticatedRequest.auth)
+  if (options?.protected && !authenticatedRequest.auth) {
     next(new BadRequest("Unauthorized"))
+    return
+  }
   if (options?.validation?.body) {
     const { error } = options?.validation?.body.validate(req.body);
     if (error != null) {
@@ -49,7 +51,6 @@ export const requestMiddleware = (
     }
   }
 
-  try {
     handler(authenticatedRequest, res, next);
   } catch (err) {
     if (process.env.NODE_ENV === 'development') {
