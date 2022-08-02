@@ -18,5 +18,9 @@ describe('App Test', () => {
     request(app).get('/guild/all').expect(200, done);
   })
 
+  test('GET /networkinfo/all should return 400', done => {
+    request(app).get('/networkinfo/all').expect(400, done);
+  })
+
 
 })

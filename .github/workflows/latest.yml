@@ -79,6 +79,7 @@ jobs:
             ls
             mkdir -p ~/kbve/gitaction/${{ github.sha }} && cd "$_"
             docker exec -i mongodb sh -c 'mongodump --archive' > db_${{ github.sha }}.dump
+            tar -cvzf db_${{ github.sha }}.tar.gz db_${{ github.sha }}.dump
 
   pkgpull:
     needs: [publish]

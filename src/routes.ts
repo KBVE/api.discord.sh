@@ -23,7 +23,7 @@ const swaggerUiOptions = {
 const router = Router();
 
 /** Network Routes */
-router.get('/networkinfo/add', NetworkController.all);
+router.get('/networkinfo/all', NetworkController.all);
 router.get('/networkinfo/search', NetworkController.search);
 router.get('/networkinfo/id/:NetworkInfoId', NetworkController.get);
 router.delete('/networkinfo/id/:NetworkInfoId', NetworkController.remove);

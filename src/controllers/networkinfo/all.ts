@@ -9,4 +9,4 @@ const all: RequestHandler = async (req, res) => {
     res.send({ networks });
 }
 
-export default requestMiddleware(all);
+export default requestMiddleware(all, { protected : true });
