@@ -29,11 +29,10 @@ COPY --from=base /dist /dist
 COPY src/public dist/src/public
 
 # Start KeyGen
-RUN apt-get update
-RUN apt-get upgrade -y
-RUN apt-get -y install openssl
-RUN openssl genrsa -des3 -out private.pem 2048
-RUN openssl rsa -in private.pem -outform PEM -pubout -out public.pem
+SHELL ["/bin/bash", "-c"]
+RUN echo "$(openssl version)"
+#RUN openssl genrsa -des3 -out private.pem 2048
+#RUN openssl rsa -in private.pem -outform PEM -pubout -out public.pem
 
 # Expose port 3000
 EXPOSE 3000
