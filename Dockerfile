@@ -3,9 +3,10 @@ FROM node:16.15.1 as base
 # Add package file
 COPY package.json ./
 COPY yarn.lock ./
+
 COPY scripts/dev.sh ./scripts/dev.sh
 COPY scripts/nginx.conf ./scripts/nginx/nginx.conf
-# COPY scripts/key.sh ./scripts/key.sh
+COPY scripts/key.sh ./scripts/key.sh
 
 # Install deps
 RUN yarn install
@@ -29,7 +30,8 @@ COPY --from=base /dist /dist
 COPY src/public dist/src/public
 
 # Start KeyGen
-RUN apk --update add openssl
+#RUN ["/bin/sh", "apk --update add openssl"]
+#RUN apk --update add openssl
 #SHELL ["/bin/bash", "-c"]
 #RUN echo "$(openssl version)"
 #RUN openssl genrsa -des3 -out private.pem 2048
