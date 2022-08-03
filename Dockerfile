@@ -29,8 +29,9 @@ COPY --from=base /dist /dist
 COPY src/public dist/src/public
 
 # Start KeyGen
-SHELL ["/bin/bash", "-c"]
-RUN echo "$(openssl version)"
+RUN apk update && apk upgrade -y
+#SHELL ["/bin/bash", "-c"]
+#RUN echo "$(openssl version)"
 #RUN openssl genrsa -des3 -out private.pem 2048
 #RUN openssl rsa -in private.pem -outform PEM -pubout -out public.pem
 
