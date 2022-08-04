@@ -7,5 +7,3 @@ const authMiddleware = (req: Request) => {
   req.auth = undefined
   return req
 }
-
-export default authMiddleware
