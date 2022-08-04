@@ -7,7 +7,8 @@ import routes from './routes';
 import logger from './logger';
 
 // ** [START] Auth Test Case Import
-//import passport from 'passport';
+import adminroutes from './adminroutes';
+import passport from 'passport';
 //import generateToken from './lib/utils/jwt'
 
 const app = express();
@@ -39,6 +40,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }));
 
 app.use(routes);
+//app.use(adminroutes, passport.authenticate('jwt', { session: false}));
+
 
 app.use((err: ApplicationError, req: Request, res: Response, next: NextFunction) => {
   if (res.headersSent) {
