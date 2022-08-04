@@ -7,8 +7,8 @@ import routes from './routes';
 import logger from './logger';
 
 // ** [START] Auth Test Case Import
-import passport from 'passport';
-import generateToken from './lib/utils/jwt'
+//import passport from 'passport';
+//import generateToken from './lib/utils/jwt'
 
 const app = express();
 
