@@ -30,17 +30,18 @@ interface HandlerOptions {
  * This router wrapper catches any error from async await
  * and throws it to the default express error handler,
  * instead of crashing the app
- * @param handler Request handler to check for error
+ * @param handler Request handler to check for error 
  */
 export const requestMiddleware = (
   handler: RequestHandler,
   options?: HandlerOptions,
 ): RequestHandler => async (req: Request, res: Response, next: NextFunction) => {
+
   try {
   const authenticatedRequest = authMiddleware(req)
 
   if (options?.protected && !authenticatedRequest.auth) {
-    next(new BadRequest("Unauthorized"))
+    next(new BadRequest("Unauthorized :C"))
     return
   }
   if (options?.validation?.body) {
