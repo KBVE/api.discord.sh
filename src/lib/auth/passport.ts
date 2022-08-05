@@ -9,14 +9,15 @@ const JwtStrategy = passportJwt.Strategy
 const ExtractJwt = passportJwt.ExtractJwt
 
 let jwt_key = process.env.JWT_SECRET as string;
-  if( jwt_key === 'undefined')  { jwt_key = 'secret' }
+  if( jwt_key === 'undefined' || 'null')  { jwt_key = 'secret' }
 
 
 passport.use(
     new JwtStrategy(
         {
-          jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
           secretOrKey: jwt_key,
+          jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+          
         },
         async (jwtToken, done) => {
             try {

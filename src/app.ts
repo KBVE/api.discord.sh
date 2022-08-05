@@ -11,6 +11,8 @@ import adminroutes from './adminroutes';
 import passport from 'passport';
 //import generateToken from './lib/utils/jwt'
 
+require('./lib/auth/passport');
+
 const app = express();
 
 function logResponseTime(req: Request, res: Response, next: NextFunction) {
@@ -40,7 +42,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }));
 
 app.use(routes);
-//app.use(adminroutes, passport.authenticate('jwt', { session: false}));
+app.use('/admin', passport.authenticate('jwt', { session: false}), adminroutes);
 
 
 app.use((err: ApplicationError, req: Request, res: Response, next: NextFunction) => {
