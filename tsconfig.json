@@ -1,4 +1,12 @@
 {
+  /* The ts-node and files section were added as a fix to `yarn dev` (a.k.a. `ts-node src/server.ts`) not using the index.d.ts file
+  /* https://stackoverflow.com/questions/51610583/ts-node-ignores-d-ts-files-while-tsc-successfully-compiles-the-project */
+  "ts-node": {
+    "files": true
+  },
+  "files": [
+    "src/index.d.ts",
+  ],
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig.json to read more about this file */
     /* Projects */
