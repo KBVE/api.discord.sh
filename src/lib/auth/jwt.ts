@@ -2,20 +2,16 @@ import { sign, SignOptions, verify, JsonWebTokenError, decode } from 'jsonwebtok
 import * as fs from 'fs';
 import * as path from 'path';
 
-
 let jwt_key = process.env.JWT_SECRET as string;
-  if( jwt_key === 'undefined')  { jwt_key = 'secret' }
+if (jwt_key === 'undefined') { jwt_key = 'secret' }
 
-// interface JWTData {  userId: string;  }
-
-
-export function generateToken(userId : string) {
+export function generateToken(userId: string) {
 
   const signInOptions: SignOptions = {
-        algorithm: 'HS256',
-        expiresIn: '999h'
-      };
-    
+    algorithm: 'HS256',
+    expiresIn: '999h'
+  };
+
   return sign({ userId }, jwt_key, signInOptions);
 };
 
@@ -23,27 +19,25 @@ export function generateToken(userId : string) {
 
 export const isTokenExpired = (token: string): boolean => {
   try {
-      const { exp } = decode(token) as {
-          exp: number;
-      };
-      const expirationDatetimeInSeconds = exp * 1000;
+    const { exp } = decode(token) as {
+      exp: number;
+    };
+    const expirationDatetimeInSeconds = exp * 1000;
 
-      return Date.now() >= expirationDatetimeInSeconds;
-    } catch {
-      
+    return Date.now() >= expirationDatetimeInSeconds;
+  } catch {
+
     return true;
   }
 };
 
-export default function verifyToken( token : string)
-{
+export default function verifyToken(token: string) {
   var payload;
   try {
     payload = verify(token, jwt_key)
-    } catch (e) {
-     
+  } catch (e) {
+
     if (e instanceof JsonWebTokenError) {
-			
       return false;
     }
 
